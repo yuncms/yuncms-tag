@@ -19,6 +19,10 @@
       "yuncms\\tag\\": ""
     }
   },
+  "require-dev": {
+    "codeception/base": "^2.2.3",
+    "codeception/verify": "^0.4.0"
+  },
   "extra": {
     "yuncms": {
       "name": "tag",
