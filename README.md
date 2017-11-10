@@ -1,5 +1,11 @@
 # yuncms-tag
 
+[![Latest Stable Version](https://poser.pugx.org/yuncms/yuncms-tag/v/stable.png)](https://packagist.org/packages/yuncms/yuncms-tag)
+[![Total Downloads](https://poser.pugx.org/yuncms/yuncms-tag/downloads.png)](https://packagist.org/packages/yuncms/yuncms-tag)
+[![Build Status](https://img.shields.io/travis/yuncms/yuncms-tag.svg)](http://travis-ci.org/yuncms/yuncms-tag)
+[![License](https://poser.pugx.org/yuncms/yuncms-tag/license.svg)](https://packagist.org/packages/yuncms/yuncms-tag)
+
+
 ## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).

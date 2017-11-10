@@ -12,7 +12,7 @@
   "require": {
     "creocoder/yii2-taggable": "~2.0",
     "xutl/yii2-bootstrap-tagsinput-asset": "~1.0.0",
-    "yuncms/yii2-core": "~2.0"
+    "yuncms/yuncms-core": "~2.0"
   },
   "autoload": {
     "psr-4": {
