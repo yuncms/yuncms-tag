@@ -1,0 +1,52 @@
+{
+  "name": "yuncms/yuncms-tag",
+  "description": "The tag module for the yuncms",
+  "keywords": [
+    "yuncms",
+    "taggable",
+    "tags",
+    "tag"
+  ],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "require": {
+    "creocoder/yii2-taggable": "~2.0",
+    "xutl/yii2-bootstrap-tagsinput-asset": "~1.0.0",
+    "yuncms/yii2-core": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "yuncms\\tag\\": ""
+    }
+  },
+  "extra": {
+    "yuncms": {
+      "name": "tag",
+      "i18n": {
+        "class": "yii\\i18n\\PhpMessageSource",
+        "sourceLanguage": "en-US",
+        "basePath": "@yuncms/tag/messages"
+      },
+      "migrationNamespace": "yuncms\\tag\\migrations",
+      "backend": {
+        "class": "yuncms\\tag\\backend\\Module"
+      },
+      "frontend": {
+        "class": "yuncms\\tag\\frontend\\Module"
+      }
+    },
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    },
+    {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  ]
+}
