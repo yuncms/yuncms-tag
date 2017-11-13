@@ -22,7 +22,7 @@ class M161111091214Create_tag_table extends Migration
             'description' => $this->text()->comment('Description'),
             'slug' => $this->string(80)->comment('Slug'),
             'letter' => $this->string(1)->comment('Letter'),
-            'frequency' => $this->integer()->notNull()->defaultValue(0)->comment('Frequency'),
+            'frequency' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('Frequency'),
         ], $tableOptions);
     }
 

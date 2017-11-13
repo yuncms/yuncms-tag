@@ -15,14 +15,14 @@ use yii\helpers\Inflector;
 
 /**
  * Class Tag
- * @property int $id
- * @property string $name
- * @property string $title
- * @property string $keywords
- * @property string $description
+ * @property int $id 主键
+ * @property string $name TAG名称
+ * @property string $title 标题
+ * @property string $keywords 关键词
+ * @property string $description 描述
  * @property string $slug 标识
- * @property string $letter
- * @property int $frequency
+ * @property string $letter 首字母
+ * @property int $frequency 热度
  */
 class Tag extends ActiveRecord
 {
@@ -32,9 +32,6 @@ class Tag extends ActiveRecord
 
     /** @var string Default name regexp */
     public static $nameRegexp = '/^[\x{4e00}-\x{9fa5}\w\+\.\-#]+$/u';
-
-    // for gbk
-    //public static $nameRegexp = '/^[\w._-\x80-\xff\#\+]+$/';
 
     /**
      * 定义行为
@@ -49,7 +46,7 @@ class Tag extends ActiveRecord
                 ActiveRecord::EVENT_BEFORE_INSERT => ['slug']
             ],
             'value' => function ($event) {
-                return Inflector::slug($event->sender->name,'');
+                return Inflector::slug($event->sender->name, '');
             }
         ];
         $behaviors['letter'] = [
@@ -71,8 +68,8 @@ class Tag extends ActiveRecord
     {
         $scenarios = parent::scenarios();
         return ArrayHelper::merge($scenarios, [
-            'create' => ['name'],
-            'update' => ['name'],
+            self::SCENARIO_CREATE => ['name', 'title', 'keywords', 'description'],
+            self::SCENARIO_UPDATE => ['name', 'title', 'keywords', 'description'],
         ]);
     }
 
@@ -90,13 +87,14 @@ class Tag extends ActiveRecord
     public function rules()
     {
         return [
-            ['name', 'required', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE]],
+            ['name', 'required'],
             ['name', 'match', 'pattern' => static::$nameRegexp],
             ['name', 'string', 'min' => 2, 'max' => 50],
             ['name', 'unique', 'message' => Yii::t('tag', 'This name has already been taken')],
             [['title', 'slug'], 'string', 'max' => 255],
             ['letter', 'string', 'max' => 1],
             [['keywords', 'description'], 'safe'],
+            
             [['frequency'], 'integer'],
             ['frequency', 'default', 'value' => 0],
         ];
