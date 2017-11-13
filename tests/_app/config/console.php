@@ -25,7 +25,7 @@ return [
         'cache' => null,
         'i18n' => [
             'translations' => [
-                'core*' => [
+                'tag*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     //'basePath' => '@app/messages',
                     'sourceLanguage' => 'en-US',

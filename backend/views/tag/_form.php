@@ -22,10 +22,6 @@ use xutl\inspinia\ActiveForm;
 <div class="hr-line-dashed"></div>
 <?= $form->field($model, 'description')->textarea() ?>
 <div class="hr-line-dashed"></div>
-<?= $form->field($model, 'slug')->textInput() ?>
-<div class="hr-line-dashed"></div>
-<?= $form->field($model, 'letter')->textInput() ?>
-<div class="hr-line-dashed"></div>
 
 <div class="form-group">
     <div class="col-sm-4 col-sm-offset-2">

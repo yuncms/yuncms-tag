@@ -25,7 +25,7 @@ class TagTest extends \Codeception\Test\Unit
     {
         $this->tester->haveFixtures([
             'php' => [
-                'class' => SettingsFixture::className(),
+                'class' => TagFixture::className(),
                 'dataFile' => codecept_data_dir() . 'tag.php'
             ]
         ]);

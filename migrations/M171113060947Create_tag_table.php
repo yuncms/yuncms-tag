@@ -4,16 +4,16 @@ namespace yuncms\tag\migrations;
 
 use yii\db\Migration;
 
-class M161111091214Create_tag_table extends Migration
+class M171113060947Create_tag_table extends Migration
 {
-    public function up()
+
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-
         $this->createTable('{{%tag}}', [
             'id' => $this->primaryKey()->unsigned()->comment('ID'),
             'name' => $this->string(50)->notNull()->unique()->comment('Name'),
@@ -26,19 +26,24 @@ class M161111091214Create_tag_table extends Migration
         ], $tableOptions);
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('{{%tag}}');
     }
 
+
     /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
+    // Use up()/down() to run migration code without a transaction.
+    public function up()
     {
+
     }
 
-    public function safeDown()
+    public function down()
     {
+        echo "M171113060947Create_tag_table cannot be reverted.\n";
+
+        return false;
     }
     */
 }

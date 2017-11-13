@@ -4,10 +4,14 @@
  * @copyright Copyright (c) 2012 TintSoft Technology Co. Ltd.
  * @license http://www.tintsoft.com/license/
  */
+
 namespace yuncms\tag\widgets;
 
 use Yii;
 use yii\base\Widget;
+use yii\caching\ChainedDependency;
+use yii\caching\DbDependency;
+use yii\db\Connection;
 use yuncms\tag\models\Tag;
 
 /**
@@ -39,7 +43,7 @@ class PopularTag extends Widget
     }
 
     /**
-     * 注册翻译
+     * 注册语言包
      */
     public function registerTranslations()
     {
@@ -59,9 +63,11 @@ class PopularTag extends Widget
     public function run()
     {
         //首页显示排行榜
-        $models = Tag::getDb()->cache(function ($db) {
+        $models = Tag::getDb()->cache(function (Connection $db) {
             return Tag::find()->orderBy(['frequency' => SORT_DESC])->limit($this->limit)->all();
-        }, $this->cache);
+        }, $this->cache, new ChainedDependency([
+            'dependencies' => new DbDependency(['db' => Tag::getDb(), 'sql' => 'SELECT MAX(id) FROM ' . Tag::tableName()])
+        ]));
         return $this->render('popular_tag', [
             'models' => $models,
             'path' => $this->path

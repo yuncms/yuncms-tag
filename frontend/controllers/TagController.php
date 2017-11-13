@@ -10,13 +10,9 @@ namespace yuncms\tag\frontend\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\caching\DbDependency;
-use yii\caching\TagDependency;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 use yuncms\tag\models\Tag;
 
 /**
@@ -28,29 +24,6 @@ class TagController extends Controller
     public function behaviors()
     {
         return [
-            'pageCache' => [
-                'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
-                'duration' => 24 * 3600 * 365, // 1 year
-                'variations' => [
-                    Yii::$app->user->id,
-                    Yii::$app->language,
-                    Yii::$app->request->get('page'),
-                ],
-                'dependency' => [
-                    'class' => 'yii\caching\ChainedDependency',
-                    'dependencies' => [
-                        new TagDependency(['tags' => ['tags']]),
-                        new DbDependency(['sql' => 'SELECT MAX(id) FROM ' . Tag::tableName()])
-                    ]
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'follow' => ['post'],
-                ],
-            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -93,34 +66,6 @@ class TagController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($name),
         ]);
-    }
-
-    /**
-     * 关注某tag
-     * @return array
-     * @throws NotFoundHttpException
-     */
-    public function actionFollow()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $id = Yii::$app->request->post('id', null);
-        if (($model = Tag::findOne(['id' => $id])) != null) {
-            /** @var \yuncms\user\models\User $user */
-            $user = Yii::$app->user->identity;
-            if ($user->hasTagValues($model->id)) {
-                $user->removeTagValues($model->id);
-                $user->save();
-                //Yii::$app->response->setStatusCode(204);
-                return ['status' => 'unfollowed'];
-            } else {
-                $user->addTagValues($model->id);
-                $user->save();
-                //Yii::$app->response->setStatusCode(200);
-                return ['status' => 'followed'];
-            }
-        } else {
-            throw new NotFoundHttpException ();
-        }
     }
 
     /**
