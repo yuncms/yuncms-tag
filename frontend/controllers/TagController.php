@@ -33,11 +33,6 @@ class TagController extends Controller
                         'actions' => ['index', 'view', 'follow'],
                         'roles' => ['@', '?']
                     ],
-                    [
-                        'allow' => true,
-                        'actions' => ['follower-tag'],
-                        'roles' => ['@'],
-                    ],
                 ],
             ],
         ];
@@ -72,32 +67,6 @@ class TagController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($name),
         ]);
-    }
-
-    /**
-     * 关注某tag
-     * @return array
-     * @throws NotFoundHttpException
-     */
-    public function actionFollowerTag()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $tagId = Yii::$app->request->post('tag_id', null);
-        if (($tag = Tag::findOne($tagId)) == null) {
-            throw new NotFoundHttpException ();
-        } else {
-            /** @var \yuncms\user\models\User $user */
-            $user = Yii::$app->user->identity;
-            if ($user->hasTagValues($tag->id)) {
-                $user->removeTagValues($tag->id);
-                $user->save();
-                return ['status' => 'unFollowed'];
-            } else {
-                $user->addTagValues($tag->id);
-                $user->save();
-                return ['status' => 'followed'];
-            }
-        }
     }
 
     /**
