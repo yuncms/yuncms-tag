@@ -59,8 +59,9 @@ class TagController extends Controller
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($name)
     {
